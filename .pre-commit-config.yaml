@@ -1,0 +1,119 @@
+# SSoT: gcs-devops-standards/tooling/configs/.pre-commit-config.yaml
+# Version: 1.0
+# Author: Camille (Gem AB - Automation Specialist)
+# Based on: TOOL_004_Git_Hooks_Standard.md and GenCr@ft Studio requirements
+
+# For global hook versions, refer to pre-commit documentation or specific hook repositories for latest stable tags.
+# Periodically run `pre-commit autoupdate` in a central management repo to propose updates to these `rev` values.
+
+# Consider running on `push` as well for more rigorous checks on certain hooks if desired.
+# default_stages: [commit, push]
+
+repos:
+  # ===== Generic File Checks (Highly Recommended) =====
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0 # Using a recent stable tag
+    hooks:
+      - id: check-added-large-files # Prevent committing large binary files
+        args: ['--maxkb=1024'] # Max 1MB. Adjust for art asset repos (e.g., gcp-aethel-assets-*)
+      - id: check-case-conflict # Check for files that would conflict on case-insensitive filesystems
+      - id: check-executables-have-shebangs
+      - id: check-json # Check JSON file syntax
+      - id: check-merge-conflict # Check for files that contain merge conflict strings
+      - id: check-shebang-scripts-are-executable # Ensures scripts with shebangs are executable
+      - id: check-symlinks # Check for symlinks that might not be portable
+      - id: check-toml # Check TOML file syntax
+      - id: check-xml # Check XML file syntax
+      - id: check-yaml # Check YAML file syntax
+        args: [--allow-multiple-documents]
+      - id: detect-private-key # Detects the presence of private keys (AWS keys, SSH keys, etc.)
+      - id: end-of-file-fixer # Ensures files end with one newline and only one
+      - id: mixed-line-ending # Replaces mixed line endings with a consistent one (LF by default)
+      - id: trailing-whitespace # Trims trailing whitespace
+
+  # ===== Markdown Linting =====
+  # Requires .markdownlint.yaml at the root of the repo using this.
+  # SSoT for .markdownlint.yaml config: devops-standards/linting/configs/.markdownlint.yaml (to be created/verified)
+  # References: GCT-TOOL-MDLINT-V1.md
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.41.0 
+    hooks:
+      - id: markdownlint
+        name: "Markdownlint"
+        description: "Lints Markdown files using .markdownlint.yaml config."
+        entry: markdownlint --config .markdownlint.yaml --fix .
+        # Runs on all staged markdown files. --fix attempts auto-correction.
+
+  # ===== Shell Script Linting =====
+  # References: SCRIPT_001_General_Scripting_Standard.md
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.10.0.1
+    hooks:
+      - id: shellcheck
+        name: "ShellCheck"
+        description: "Static analysis for shell scripts (.sh, .bash)."
+        args: ["-x"]  # To follow sourced files
+
+  # ===== OpenTofu/Terraform Linting & Formatting =====
+  # Requires OpenTofu installed and configured in the environment.
+  # References: IAC_001_OpenTofu_Tooling_Standard.md, IAC_007_IaC_Static_Analysis_Standard.md
+  - repo: local
+    hooks:
+      - id: opentofu-fmt
+        name: "OpenTofu Format (tofu fmt -check)"
+        description: "Checks if OpenTofu (.tf, .tfvars) files are correctly formatted."
+        entry: bash -c 'files=$(git diff --cached --name-only --diff-filter=ACM "*.tf" "*.tfvars"); [ -z "$files" ] || (echo "$files" | xargs -r dirname | sort -u | xargs -I {} tofu -chdir={} fmt -check -diff)'
+        language: system
+        files: (\.tf|\.tfvars)$
+        pass_filenames: false
+      - id: opentofu-validate
+        name: "OpenTofu Validate (tofu validate)"
+        description: "Validates OpenTofu configuration files in directories with a backend.tf."
+        # This hook runs `tofu init` (for provider download) and `tofu validate`
+        # It's more reliable to run this in directories that are actual OpenTofu root modules.
+        entry: bash -c 'dirs=$(git ls-files -m -o --exclude-standard -- "*.tf" "*.tfvars" | xargs -r dirname | sort -u); for dir in $dirs; do if [ -f "$dir/backend.tf" ] || [ -f "$dir/main.tf" ]; then (echo "Validating Tofu in $dir" && cd "$dir" && tofu init -backend=false -upgrade && tofu validate -no-color) || exit 1 ; fi; done'
+        language: system
+        files: \.tf$ # Triggers if any .tf file is staged
+        pass_filenames: false
+
+  # ===== Commit Message Linting (via commit-msg hook) =====
+  # Requires Node.js, npm/npx, and commitlint installed.
+  # Onboarding scripts should handle commitlint setup.
+  # commitlint.config.js SSoT: devops-standards/tooling/configs/commitlint.config.js
+  # References: TOOL_001_Conventional_Commits_Standard.md
+  - repo: local
+    hooks:
+      - id: commitlint
+        name: "Commitlint"
+        entry: npx commitlint --edit $1 # $1 is the file containing the commit message
+        language: node 
+        stages: [commit-msg]
+
+  # ===== Python Linting & Formatting (Example - Uncomment and adapt if Python projects are common) =====
+  # Requires Python, pip, black, flake8.
+  # - repo: https://github.com/psf/black-pre-commit-mirror
+  #   rev: 24.4.2 # Check for latest stable tag
+  #   hooks:
+  #   - id: black
+  #     # args: ["--config=pyproject.toml"] # If black config is in pyproject.toml
+  #     language_version: python3.9 # Specify your project's Python version
+  # - repo: https://github.com/PyCQA/flake8
+  #   rev: 7.1.0 # Check for latest stable tag
+  #   hooks:
+  #   - id: flake8
+  #     # args: ["--config=.flake8"] # If you have a .flake8 config file
+
+  # ===== JavaScript/TypeScript Linting & Formatting (Example - Uncomment and adapt if used) =====
+  # Requires Node.js, npm/npx, eslint, prettier.
+  # - repo: https://github.com/pre-commit/mirrors-eslint
+  #   rev: v9.7.0 # Check for latest stable tag
+  #   hooks:
+  #     - id: eslint
+  #       # args: ["--fix"]
+  #       types: [javascript, jsx, ts, tsx]
+  # - repo: https://github.com/pre-commit/mirrors-prettier
+  #   rev: v3.1.0 # Check for latest stable tag. Note: Prettier v4 is ESM only.
+  #   hooks:
+  #     - id: prettier
+  #       # args: ["--config=.prettierrc.yaml"]
+  #       # types_or: [javascript, jsx, ts, tsx, json, css, scss, html, yaml, markdown] # Adjust types
