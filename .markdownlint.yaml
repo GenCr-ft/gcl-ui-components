@@ -3,7 +3,7 @@
 #
 # This template defines the standard Markdown linting rules for Gencraft projects.
 # It MUST be used by the markdownlint-cli tool, typically via pre-commit hooks.
-# This configuration MUST be kept in sync with the Gencraft KB-Contribution-And-Style-Guide.md.
+# This configuration MUST be kept in sync with the Gencraft kb-contribution-and-style-guide.md.
 # Rules are based on https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
 #
 # Default state for all rules is 'true' unless explicitly set to 'false' or configured otherwise.
