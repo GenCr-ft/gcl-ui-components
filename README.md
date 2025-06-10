@@ -1,5 +1,5 @@
 ---
-docId: MYTEST-GC-README-IDX-009
+docId: GC-README-IDX-009
 title: Readme
 version: 1.0.0
 status: Draft
