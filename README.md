@@ -24,7 +24,7 @@ See REMEDIATION.md §3.2 for the open decision blocking implementation.
 - `commitlint.config.js` — Conventional Commits enforcement
 - `.github/workflows/ssot-compliance.yml` — SSoT compliance CI workflow
 
-## IA Instructions
+## AI Instructions
 
 **Purpose for AI Agents:**
 
