@@ -1,0 +1,12 @@
+# Canonical yamllint configuration — SSoT: gcs-devops-standards/.yamllint.yaml
+extends: default
+
+rules:
+  # Config files benefit from longer lines; raise limit to 120.
+  line-length:
+    max: 120
+
+  # Allow inline comments with a single space before the content.
+  comments:
+    require-starting-space: true
+    min-spaces-from-content: 1
