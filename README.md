@@ -47,7 +47,7 @@ This repository will house the shared UI component library for Aethel. Its respo
 
 **Current state:** Empty stub. No UI framework or build toolchain has been decided. This library is the visual consistency layer — without it, each consumer will independently implement conflicting UI patterns.
 
-The framework decision (React + Vite, Svelte, Vue, or framework-less web components) must be captured as an ADR in `gcp-aethel-architecture` before any `src/` code is written.
+The framework decision (React + Vite, Svelte, Vue, or framework-less web components) must be captured as an ADR in `gcp-aethel-architecture` before any `src/` code is written. See REMEDIATION.md §3.2 for the open decision blocking implementation.
 
 ## Repository Contents
 
