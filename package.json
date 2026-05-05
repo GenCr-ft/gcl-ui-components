@@ -1,6 +1,6 @@
 {
   "name": "@gencraft/gcl-ui-components",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Shared UI component library for the Aethel platform (pre-implementation stub).",
   "private": true,
   "devDependencies": {

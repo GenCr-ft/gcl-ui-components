@@ -33,7 +33,7 @@ metadata:
 # gcl-ui-components
 
 > Shared UI component library for the Aethel multiplayer voxel RPG.
-> **Pre-implementation stub** — framework decision pending (see BACK-007-01).
+> **Pre-implementation stub** — framework decision pending (see ENG-BACK-007-01).
 
 ## Overview
 

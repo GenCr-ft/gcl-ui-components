@@ -6,9 +6,6 @@ rules:
   line-length:
     max: 120
 
-  # Standardise comment indentation.
-  comments-indentation: enable
-
   # Allow inline comments with a single space before the content.
   comments:
     require-starting-space: true
