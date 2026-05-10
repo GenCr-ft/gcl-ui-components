@@ -1,3 +1,36 @@
+---
+docId: GCL-READ-007
+title: gcl-ui-components
+version: 0.1.0
+authors:
+- Architecture Lead
+reviewers:
+- Client Lead
+- Architecture Lead
+creation_date: '2026-04-29'
+last_updated_date: '2026-05-10'
+language: en
+summary: >
+  Shared UI component library for the Aethel platform. Pre-implementation stub.
+  Framework decision (React / Vue / Svelte) is pending an ADR in gcp-aethel-architecture
+  before any src/ code is written.
+knowledgeGuardian:
+- Architecture Lead
+metadata:
+  lifecycle-stage: draft
+  keywords:
+  - ui-components
+  - shared-library
+  - stub
+  scope: project-aethel
+  domain: engineering
+  doc-type: readme
+  intended-audience:
+  - contributors
+  - ai-agents
+  security-classification: l2_confidential
+---
+
 # gcl-ui-components
 
 Shared UI component library for the Aethel platform.
