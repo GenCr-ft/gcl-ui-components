@@ -1,7 +1,7 @@
 ---
 docId: GCL-READ-007
 title: gcl-ui-components
-version: 0.1.0
+version: 0.1.1
 authors:
 - Architecture Lead
 reviewers:
@@ -9,19 +9,14 @@ reviewers:
 - Architecture Lead
 creation_date: '2026-04-29'
 last_updated_date: '2026-05-10'
-language: en
-summary: >
-  Shared UI component library for the Aethel platform. Pre-implementation stub.
-  Framework decision (React / Vue / Svelte) is pending an ADR in gcp-aethel-architecture
-  before any src/ code is written.
 knowledgeGuardian:
-- Architecture Lead
+- Béatrice (GCT-MGT-SPM-001)
 metadata:
-  lifecycle-stage: draft
+  lifecycle-stage: approved
   keywords:
   - ui-components
   - shared-library
-  - stub
+  - godot-ui
   scope: project-aethel
   domain: engineering
   doc-type: readme
@@ -37,50 +32,36 @@ Shared UI component library for the Aethel platform.
 
 ## Overview
 
-This repository is intended to house the shared visual primitives and interface patterns used across the Aethel ecosystem. Its target audience is the future frontend and UX implementation team responsible for consistent HUD, inventory, and portal UI behavior.
+This repository houses the shared visual primitives and interface patterns used across the Aethel ecosystem. It provides consistent HUD, inventory, and menu behaviors for the Godot-based client applications.
 
-The repo is currently a placeholder: there is no component implementation yet, and the first delivery is blocked on a framework decision.
+**Technology Stack:** Godot 4 Control Nodes (ENG-ADR-056).
 
-## Planned Scope
+## Scope
 
-If activated, this library is expected to cover:
+This library covers:
 
-- **Visual Primitives**: Buttons, modals, tooltips, and badges.
-- **Game HUD**: Health/Mana bars, action slots, and minimap components.
-- **RPG UI**: Inventory grids, item tooltips, and character sheets.
-- **Design Tokens**: Color palettes, typography, and spacing systems.
+- **Visual Primitives**: Standardized Control nodes for buttons, modals, and tooltips.
+- **Game HUD**: Health/Stamina bars, action slots, and adaptive minimap components.
+- **RPG UI**: Inventory grids, item tooltips, and character sheet layouts.
+- **Design Tokens**: Centralized Godot Theme resources for colors, fonts, and styles.
 
 ## Project Status
 
-> ⚠️ **Status: Pre-implementation Stub**
->
-> Implementation is currently pending a framework decision. No source code has been written yet. See `REMEDIATION.md §3.2` for the open decision blocking this project.
+- **Active**: Initial UI framework integrated into the walking skeleton.
+- **Current Milestone**: Standardizing reusable Control nodes and Theme resources.
 
 ## What Exists Today
 
-This repository currently contains governance scaffolding only:
+This repository contains:
 
-- repository linting and commit policies
-- SSoT compliance workflow
-- package naming placeholder in `package.json`
-
-There is no install, build, test, or usage path yet because there is no component code.
-
-## When This Repo Becomes Active
-
-Before adding components, confirm:
-
-```text
-1. The UI framework and packaging strategy are approved.
-2. The primary consumers are defined.
-3. Storybook or equivalent preview tooling is selected.
-4. Accessibility and design-token requirements are documented.
-```
+- **SSoT Compliance**: Automated metadata and linting validation.
+- **Governance**: Commit and branching policies aligned with studio standards.
+- **Orientation**: Standardized [CLAUDE.md](./CLAUDE.md) for agent assistance.
 
 ## Contributing
 
-Do not add framework-specific implementation code until the blocking decision is resolved. Contributions are currently limited to governance, planning, and ADR-supporting documentation work.
+Follow the Godot 4 Control node best practices defined in the [Engineering Handbook](../gcs-engineering-handbook). All new components must be verified against the design tokens.
 
 ---
 
-*For technical specifications and developer guidelines, see [AGENTS.md](./AGENTS.md).*
+*For technical specifications and developer guidelines, see [CLAUDE.md](./CLAUDE.md).*
