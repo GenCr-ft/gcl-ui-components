@@ -80,12 +80,10 @@ repos:
       - id: opentofu-validate
         name: "OpenTofu Validate (tofu validate)"
         description: "Validates OpenTofu configuration files."
-        entry: bash -c 'tofu validate -no-color' # Run in each directory with .tf files or main dir
+        entry: bash -c 'for d in $(git ls-files -m -o --exclude-standard -- "*.tf" | xargs -n1 dirname | sort -u); do (cd "$d" && echo "--- Validating in $d" && tofu validate -no-color); done'
         language: system
         files: \.tf$ # Or run once per commit if it traverses
         pass_filenames: false # Usually validate runs on the whole configuration
-        # This hook needs careful scoping if you have multiple independent Tofu configs in one repo.
-        # Often better run in CI or per-directory manually.
 
   # ===== JavaScript/TypeScript Linting =====
   - repo: https://github.com/pre-commit/mirrors-eslint
