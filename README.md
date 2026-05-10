@@ -8,7 +8,7 @@ reviewers:
 - Client Lead
 - Architecture Lead
 creation_date: '2026-04-29'
-last_updated_date: '2026-05-05'
+last_updated_date: '2026-05-10'
 language: en
 summary: >
   Shared UI component library for the Aethel platform. Pre-implementation stub.
@@ -30,37 +30,57 @@ metadata:
   - ai-agents
   security-classification: l2_confidential
 ---
+
 # gcl-ui-components
 
-> Shared UI component library for the Aethel multiplayer voxel RPG.
-> **Pre-implementation stub** — framework decision pending (see ENG-BACK-007-01).
+Shared UI component library for the Aethel platform.
 
 ## Overview
 
-This repository will house the shared UI component library for Aethel. Its responsibilities will include:
+This repository is intended to house the shared visual primitives and interface patterns used across the Aethel ecosystem. Its target audience is the future frontend and UX implementation team responsible for consistent HUD, inventory, and portal UI behavior.
 
-- Reusable visual primitives (buttons, modals, tooltips, badges)
-- Game HUD components (health bar, mana bar, action slots, minimap)
-- Inventory UI components (inventory grid, item slots, item tooltips)
-- Menu and navigation components (main menu, settings panel, character sheet)
-- Design tokens (color palette, typography, spacing, animation easing)
+The repo is currently a placeholder: there is no component implementation yet, and the first delivery is blocked on a framework decision.
 
-**Current state:** Empty stub. No UI framework or build toolchain has been decided. This library is the visual consistency layer — without it, each consumer will independently implement conflicting UI patterns.
+## Planned Scope
 
-The framework decision (React + Vite, Svelte, Vue, or framework-less web components) must be captured as an ADR in `gcp-aethel-architecture` before any `src/` code is written. See REMEDIATION.md §3.2 for the open decision blocking implementation.
+If activated, this library is expected to cover:
 
-## Repository Contents
+- **Visual Primitives**: Buttons, modals, tooltips, and badges.
+- **Game HUD**: Health/Mana bars, action slots, and minimap components.
+- **RPG UI**: Inventory grids, item tooltips, and character sheets.
+- **Design Tokens**: Color palettes, typography, and spacing systems.
 
-- `.pre-commit-config.yaml` — Studio-canonical pre-commit hook configuration
-- `.markdownlint.yaml`, `.yamllint.yaml` — Markdown and YAML linting rules
-- `.gitignore` — Multi-stack gitignore
-- `commitlint.config.js` — Conventional Commits enforcement
-- `.github/workflows/ssot-compliance.yml` — SSoT compliance CI workflow
+## Project Status
 
-## AI Instructions
+> ⚠️ **Status: Pre-implementation Stub**
+>
+> Implementation is currently pending a framework decision. No source code has been written yet. See `REMEDIATION.md §3.2` for the open decision blocking this project.
 
-**Purpose for AI Agents:**
+## What Exists Today
 
-- This repository is a pre-implementation stub. Do not attempt to install or run it as a library.
-- When implementation begins, the framework decision (React, Vue, Svelte, etc.) and build toolchain must be documented as an ADR before any component work begins.
-- All components must be accessible (WCAG 2.1 AA) and include Storybook stories for review.
+This repository currently contains governance scaffolding only:
+
+- repository linting and commit policies
+- SSoT compliance workflow
+- package naming placeholder in `package.json`
+
+There is no install, build, test, or usage path yet because there is no component code.
+
+## When This Repo Becomes Active
+
+Before adding components, confirm:
+
+```text
+1. The UI framework and packaging strategy are approved.
+2. The primary consumers are defined.
+3. Storybook or equivalent preview tooling is selected.
+4. Accessibility and design-token requirements are documented.
+```
+
+## Contributing
+
+Do not add framework-specific implementation code until the blocking decision is resolved. Contributions are currently limited to governance, planning, and ADR-supporting documentation work.
+
+---
+
+*For technical specifications and developer guidelines, see [AGENTS.md](./AGENTS.md).*

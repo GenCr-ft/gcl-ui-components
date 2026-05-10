@@ -17,6 +17,27 @@ Pre-implementation stub for the shared UI component library for the Aethel multi
 | `package.json` | Defines `@gencraft/gcl-ui-components` package name, devDeps for commitlint |
 | `.github/workflows/ssot-compliance.yml` | SSoT compliance CI |
 
+## Activation Conditions
+
+Treat this repo as blocked until a framework ADR is approved. Before writing implementation code, confirm:
+
+1. UI framework choice
+2. Build and package toolchain
+3. Preview/documentation tooling
+4. Accessibility baseline
+5. Consumer integration targets
+
+## Expected First Implementation Slice
+
+Once activated, the first delivery should include:
+
+```text
+src/ or packages/         component source
+stories/ or .storybook/   interactive previews
+tests/                    component and accessibility tests
+tokens/                   design tokens or theme primitives
+```
+
 ## CI/CD & Required Checks
 
 SSoT compliance workflow validates frontmatter on every push/PR.
@@ -33,4 +54,6 @@ SSoT compliance workflow validates frontmatter on every push/PR.
 - **Do not write any component code** before the framework ADR is approved in `gcp-aethel-architecture`.
 - When implementation begins: all components must be WCAG 2.1 AA accessible and include Storybook stories.
 - This library is consumed by `gcp-aethel-client` (Godot overlay UI) and potentially other Aethel front-ends — keep dependencies minimal.
+- Keep README human-facing and move exhaustive dev-tooling guidance here once the repo becomes active.
+- Prefer primitives, tokens, and documented composition patterns before large feature-specific components.
 - All Markdown files must carry valid SSoT YAML frontmatter.
