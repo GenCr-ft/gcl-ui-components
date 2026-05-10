@@ -1,4 +1,35 @@
-# AGENTS.md — gcl-ui-components
+---
+docId: ENG-GUID-012
+title: CLAUDE.md - UI Components Orientation
+version: 1.0.0
+authors:
+- Architecture Lead
+reviewers: []
+creation_date: '2026-05-10'
+language: en
+summary: Technical orientation guide for AI agents and contributors working on the shared Godot UI components.
+last_updated_date: '2026-05-10'
+knowledgeGuardian:
+- Béatrice (GCT-MGT-SPM-001)
+metadata:
+  lifecycle-stage: draft
+  keywords:
+  - orientation
+  - guide
+  - development
+  - agent-instructions
+  - godot-ui
+  - control-nodes
+  scope: project-aethel
+  domain: engineering
+  doc-type: orientation-guide
+  intended-audience:
+  - ai-agents
+  - contributors
+  security-classification: l2_confidential
+ssot_path: gcl-ui-components/CLAUDE.md
+---
+# CLAUDE.md — gcl-ui-components
 
 ## Project Overview
 
