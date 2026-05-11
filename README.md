@@ -58,9 +58,16 @@ This repository contains:
 - **Governance**: Commit and branching policies aligned with studio standards.
 - **Orientation**: Standardized [CLAUDE.md](./CLAUDE.md) for agent assistance.
 
+## Quick Start
+
+```bash
+./onboard.sh   # install dependencies (idempotent)
+./test.sh      # run tests (no tests yet — stub exits 0)
+```
+
 ## Contributing
 
-Follow the Godot 4 Control node best practices defined in the [Engineering Handbook](../gcs-engineering-handbook). All new components must be verified against the design tokens.
+Follow the studio conventions defined in the [Engineering Handbook](../gcs-engineering-handbook). Framework decision (React/Svelte/Vue/web components) is pending an ADR — do not write component code until that is approved.
 
 ---
 
