@@ -10,13 +10,12 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-if ! command -v node &>/dev/null; then
-  echo "✗ node not found. Install Node.js 20 LTS." >&2
+if ! command -v node &>/dev/null || ! command -v npm &>/dev/null; then
+  echo "✗ node or npm not found. Install Node.js 20 LTS." >&2
   exit 1
 fi
 
-NODE_MAJOR=$(node --version | sed 's/v//' | cut -d. -f1)
-if [ "$NODE_MAJOR" -lt 20 ]; then
+if ! node -e "if (parseInt(process.versions.node.split('.')[0]) < 20) process.exit(1)" 2>/dev/null; then
   echo "✗ Node.js 20+ required (found $(node --version))." >&2
   exit 1
 fi

@@ -14,7 +14,7 @@ cd "$SCRIPT_DIR"
 for arg in "$@"; do
   case "$arg" in
     --help|-h)
-      sed -n '2,7p' "$0" | sed 's/^# \?//'
+      sed -n '2,/^[^#]/p' "$0" | sed '$d' | sed 's/^# \?//'
       exit 0 ;;
   esac
 done
