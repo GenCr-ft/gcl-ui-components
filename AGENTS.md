@@ -1,14 +1,15 @@
 ---
 docId: ENG-AGEN-006
 title: AGENTS.md - gcl-ui-components
-version: 1.0.0
+version: 1.1.0
 authors:
 - Architecture Lead
+- Claude Sonnet 4.6
 reviewers: []
 creation_date: '2026-05-11'
 language: en
-summary: Per-repo onboarding guide for AI agents working on the gcl-ui-components stub library.
-last_updated_date: '2026-05-11'
+summary: Per-repo onboarding guide for AI agents working on the gcl-ui-components stub library. ON ICE — explicit activation gates required before any implementation.
+last_updated_date: '2026-05-12'
 knowledgeGuardian:
 - Béatrice (GCT-MGT-SPM-001)
 metadata:
@@ -20,6 +21,8 @@ metadata:
   - ui
   - components
   - typescript
+  - activation-gate
+  - on-ice
   scope: project-aethel
   domain: engineering
   doc-type: orientation-guide
@@ -31,11 +34,30 @@ ssot_path: gcl-ui-components/AGENTS.md
 ---
 # AGENTS.md — gcl-ui-components
 
+## STATUS: ON ICE — Do Not Activate Without Explicit Instructions
+
+> **This repository is blocked.** Do not write any implementation code, add source files,
+> or open implementation PRs until ALL three activation gates below are cleared.
+> Architecture decision: ENG-ADR-068 (merged 2026-05-12).
+
+### Activation Gates (all three required)
+
+| Gate | Status | Location |
+|------|--------|---------|
+| **ENG-ADR-07x** — UI framework selection ADR approved | NOT YET WRITTEN | `gcs-plt-architecture/` |
+| **GAM-SPEC-049** — XP Leveling MVP spec approved | NOT YET APPROVED | `gcp-aethel-docs-gdd/` |
+| **GAM-SPEC-066** — Inventory System spec approved | NOT YET APPROVED | `gcp-aethel-docs-gdd/` |
+
+When all three are approved, remove this section and implement a full AGENTS.md following
+the workspace AGENTS.md pattern. The first implementation slice is described in `CLAUDE.md`.
+
+---
+
 ## Project Overview
 
-Shared UI component library for the Aethel platform. Currently a **stub** — no implementation yet. Phase 5+ work. This library will provide reusable UI components shared across Aethel's web-facing surfaces.
+Shared UI component library for the Aethel platform. Currently a **stub** — no implementation yet. This library will provide reusable UI components shared across Aethel's web-facing surfaces.
 
-**Phase status:** Stub — implementation begins in Phase 5+.
+**Phase status:** On ice per ENG-ADR-068 — implementation blocked on ENG-ADR-07x + GDD approvals.
 
 ## Quick Commands
 
