@@ -44,7 +44,7 @@ ssot_path: gcl-ui-components/AGENTS.md
 
 | Gate | Status | Location |
 |------|--------|---------|
-| **ENG-ADR-07x** — UI framework selection ADR approved | NOT YET WRITTEN | `gcs-plt-architecture/` |
+| **ENG-ADR-07x** — UI framework selection ADR approved | NOT YET WRITTEN | `gcp-aethel-architecture/` |
 | **GAM-SPEC-049** — XP Leveling MVP spec approved | NOT YET APPROVED | `gcp-aethel-docs-gdd/` |
 | **GAM-SPEC-066** — Inventory System spec approved | NOT YET APPROVED | `gcp-aethel-docs-gdd/` |
 

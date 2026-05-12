@@ -47,8 +47,8 @@ This library covers:
 
 ## Project Status
 
-- **Active**: Initial UI framework integrated into the walking skeleton.
-- **Current Milestone**: Standardizing reusable Control nodes and Theme resources.
+- **ON ICE** — implementation blocked per ENG-ADR-068. No component code may be written until all activation gates in [AGENTS.md](./AGENTS.md) are cleared.
+- Activation requires: ENG-ADR-07x (UI framework ADR), GAM-SPEC-049 (XP Leveling), and GAM-SPEC-066 (Inventory System) all approved.
 
 ## What Exists Today
 
