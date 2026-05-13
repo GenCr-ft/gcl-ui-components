@@ -89,3 +89,24 @@ gcl-ui-components/
 
 - Conventional Commits v1.0.0. Branch: `feat/`, `fix/`, `test/`, `chore/`.
 - AI commits: `Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>`
+
+## Gap Protocol
+
+Any gap, defect, or action item found while working in this repo **must become a GitHub Issue before proceeding** — nothing lives only in conversation context or memory.
+
+```bash
+# Route: engineering/game bugs and improvements → gcp-aethel-backlog
+gh issue create --repo GenCr-ft/gcp-aethel-backlog \
+  --title "[gcl-ui-components] Short description of the gap" \
+  --body "## Summary
+
+## Evidence
+
+## Ref
+ENG-BACK-NNN (if known)"
+
+# Immediately add to Project #16:
+gh project item-add 16 --owner GenCr-ft --url <issue-url>
+```
+
+Full routing table: workspace `AGENTS.md §9 — Gap Identification Protocol`.
