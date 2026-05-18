@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash /home/lgan/hxgn/dev/claude/exp/gcs-plt-gemop/hooks/git-safety-check.sh",
+            "command": "bash \"$(git rev-parse --show-toplevel 2>/dev/null)/../gcs-plt-gemop/hooks/git-safety-check.sh\"",
             "timeout": 5,
             "statusMessage": "🛡️ Git Safety: checking for force-push to protected branches...",
             "async": false
@@ -20,7 +20,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 /home/lgan/hxgn/dev/claude/exp/gcs-plt-gemop/hooks/date-updater.py",
+            "command": "python3 \"$(git rev-parse --show-toplevel 2>/dev/null)/../gcs-plt-gemop/hooks/date-updater.py\"",
             "timeout": 10,
             "async": true
           }
