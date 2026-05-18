@@ -110,3 +110,23 @@ gh project item-add 16 --owner GenCr-ft --url <issue-url>
 ```
 
 Full routing table: workspace `AGENTS.md §9 — Gap Identification Protocol`.
+
+## Orchestration
+
+**Status:** ✅ Migrated — Stage 2 (2026-05-18)
+
+This repo follows the Software Factory routing (workspace `CLAUDE.md §Orchestration Routing`):
+- This AGENTS.md is the authoritative source for stack, commands, and file boundaries.
+- Shared skills are available via `~/.claude/skills/` (symlinked from `gcs-plt-gemop/skills/`).
+- Enforcement hooks are registered in `.claude/settings.json`.
+
+### Relevant Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `review-pr` | Technical code review of a pull request |
+| `pr-lifecycle` | Open, push, and manage PRs end-to-end |
+| `gencraft-git-workflow` | GenCr@ft branching and commit conventions |
+| `jest-unit-testing-typescript` | Jest unit test patterns for TypeScript |
+| `adr-authoring` | Writing Architecture Decision Records (framework decision pending) |
+| `decision-advisor` | Structured analysis of architectural decisions |
