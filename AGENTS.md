@@ -9,7 +9,7 @@ reviewers: []
 creation_date: '2026-05-11'
 language: en
 summary: Per-repo onboarding guide for AI agents working on the gcl-ui-components stub library. ON ICE — explicit activation gates required before any implementation.
-last_updated_date: '2026-05-12'
+last_updated_date: '2026-05-20'
 knowledgeGuardian:
 - Béatrice (GCT-MGT-SPM-001)
 metadata:

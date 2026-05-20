@@ -8,7 +8,7 @@ reviewers:
 - Client Lead
 - Architecture Lead
 creation_date: '2026-04-29'
-last_updated_date: '2026-05-10'
+last_updated_date: '2026-05-20'
 knowledgeGuardian:
 - Béatrice (GCT-MGT-SPM-001)
 metadata:
