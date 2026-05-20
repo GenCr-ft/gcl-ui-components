@@ -8,7 +8,7 @@ reviewers: []
 creation_date: '2026-05-10'
 language: en
 summary: Technical orientation guide for AI agents and contributors working on the shared Godot UI components.
-last_updated_date: '2026-05-10'
+last_updated_date: '2026-05-20'
 knowledgeGuardian:
 - Béatrice (GCT-MGT-SPM-001)
 metadata:
