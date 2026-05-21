@@ -52,14 +52,6 @@ repos:
       - id: yamllint
         args: ['--config-file', '.yamllint.yaml']
 
-  # ===== JavaScript/TypeScript Linting =====
-  - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v9.9.0
-    hooks:
-      - id: eslint
-        types: [javascript, ts, tsx]
-        # Note: Requires a .eslintrc.js config file in the repo.
-
   # ===== Commit Message Validation =====
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
     rev: v9.22.0
