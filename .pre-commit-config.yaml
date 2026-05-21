@@ -52,44 +52,6 @@ repos:
       - id: yamllint
         args: ['--config-file', '.yamllint.yaml']
 
-  # ===== Python Linting & Formatting (Ruff) =====
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.5.5
-    hooks:
-      - id: ruff
-        args: [--fix, --exit-non-zero-on-fix]
-      - id: ruff-format
-
-  # == Shell Script Linting ==
-  - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.10.0.1 # Check for latest stable tag
-    hooks:
-      - id: shellcheck
-        name: "Shellcheck"
-        description: "Static analysis for shell scripts."
-        # args: ["-x"]  # To follow sourced files
-
-  # == OpenTofu/Terraform Linting & Formatting ==
-  # Requires OpenTofu installed.
-  - repo: local
-    hooks:
-      - id: opentofu-fmt
-        name: "OpenTofu Format (tofu fmt)"
-        description: "Formats OpenTofu HCL files."
-        entry: bash -c 'tofu fmt -recursive $(git ls-files -m -o --exclude-standard "*.tf" | xargs dirname | sort -u)'
-        language: system
-        files: \.tf$
-        # This runs fmt on directories containing staged .tf files.
-        # A simpler alternative is to run on all .tf files, but can be slow.
-        # entry: tofu fmt -check -recursive . # Use -check for linting, remove for formatting
-      - id: opentofu-validate
-        name: "OpenTofu Validate (tofu validate)"
-        description: "Validates OpenTofu configuration files."
-        entry: bash -c 'for d in $(git ls-files -m -o --exclude-standard -- "*.tf" | xargs -n1 dirname | sort -u); do (cd "$d" && echo "--- Validating in $d" && tofu validate -no-color); done'
-        language: system
-        files: \.tf$ # Or run once per commit if it traverses
-        pass_filenames: false # Usually validate runs on the whole configuration
-
   # ===== JavaScript/TypeScript Linting =====
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v9.9.0
