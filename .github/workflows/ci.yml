@@ -29,7 +29,7 @@ jobs:
       - name: Secret scan — detect-secrets
         # backlog#177: hard gate — do NOT add continue-on-error or || true
         run: |
-          pip install detect-secrets==1.5.0 -q
+          python3 -m pip install detect-secrets==1.5.0 -q
           detect-secrets scan --baseline .secrets.baseline
 
   ssot-compliance:
