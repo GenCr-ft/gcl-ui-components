@@ -7,5 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Rewrote `detect-secrets` CI step to use hashed-secret comparison (exits non-zero on new unbaselined secrets); `scan --baseline` always exits 0. (#25, @loigallain)
+
 ### Changed
 - Added `.secrets.baseline` and `detect-secrets==1.5.0` CI gate. (#24, @loigallain)
