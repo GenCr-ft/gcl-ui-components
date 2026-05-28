@@ -26,6 +26,9 @@ jobs:
         run: bash test.sh
         timeout-minutes: 10
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
       - name: Secret scan — detect-secrets
         # backlog#177: hard gate — do NOT add continue-on-error or || true
         run: |
