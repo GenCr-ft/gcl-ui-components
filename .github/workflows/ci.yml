@@ -30,10 +30,23 @@ jobs:
         with:
           python-version: '3.x'
       - name: Secret scan — detect-secrets
-        # backlog#177: hard gate — do NOT add continue-on-error or || true
+        # backlog#487: hard gate — do NOT add continue-on-error or || true
         run: |
           python3 -m pip install detect-secrets==1.5.0 -q
-          detect-secrets scan --baseline .secrets.baseline
+          detect-secrets scan > /tmp/current_scan.json
+          python3 - <<'PYEOF'
+import json, sys
+baseline = json.load(open(".secrets.baseline"))
+current = json.load(open("/tmp/current_scan.json"))
+b_known = {(f, s["hashed_secret"]) for f, ss in baseline.get("results", {}).items() for s in ss}
+new = [(f, s) for f, ss in current.get("results", {}).items() for s in ss if (f, s["hashed_secret"]) not in b_known]
+if new:
+    print("ERROR: Unbaselined secrets found — run 'detect-secrets scan > .secrets.baseline' to review:")
+    for f, s in sorted(new):
+        print(f"  {f}:{s['line_number']} ({s['type']})")
+    sys.exit(1)
+print("detect-secrets: OK — no new secrets.")
+PYEOF
 
   ssot-compliance:
     name: SSoT Compliance Check
