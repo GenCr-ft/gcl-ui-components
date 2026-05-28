@@ -26,6 +26,15 @@ jobs:
         run: bash test.sh
         timeout-minutes: 10
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Secret scan — detect-secrets
+        # backlog#177: hard gate — do NOT add continue-on-error or || true
+        run: |
+          python3 -m pip install detect-secrets==1.5.0 -q
+          detect-secrets scan --baseline .secrets.baseline
+
   ssot-compliance:
     name: SSoT Compliance Check
     uses: GenCr-ft/gcd-shared-actions/.github/workflows/reusable-ssot-linter.yml@v1.3.0
