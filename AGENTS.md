@@ -88,7 +88,7 @@ gcl-ui-components/
 ## Commit & PR Conventions
 
 - Conventional Commits v1.0.0. Branch: `feat/`, `fix/`, `test/`, `chore/`.
-- AI commits: `Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>`
+- Co-author trailer: Strictly prohibited in this workspace due to administrative blocks. Do NOT write or push commits containing the `Co-Authored-By` trailer.
 
 ## Gap Protocol
 
