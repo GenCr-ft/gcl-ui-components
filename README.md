@@ -8,7 +8,7 @@ reviewers:
 - Client Lead
 - Architecture Lead
 creation_date: '2026-04-29'
-last_updated_date: '2026-05-10'
+last_updated_date: '2026-06-02'
 knowledgeGuardian:
 - Béatrice (GCT-MGT-SPM-001)
 metadata:
@@ -56,7 +56,7 @@ This repository contains:
 
 - **SSoT Compliance**: Automated metadata and linting validation.
 - **Governance**: Commit and branching policies aligned with studio standards.
-- **Orientation**: Standardized [CLAUDE.md](./CLAUDE.md) for agent assistance.
+- **Orientation**: Standardized [AGENTS.md](./AGENTS.md) for agent assistance.
 
 ## Quick Start
 
@@ -71,4 +71,4 @@ Follow the studio conventions defined in the [Engineering Handbook](../gcs-engin
 
 ---
 
-*For technical specifications and developer guidelines, see [CLAUDE.md](./CLAUDE.md).*
+*For technical specifications and developer guidelines, see [AGENTS.md](./AGENTS.md).*
