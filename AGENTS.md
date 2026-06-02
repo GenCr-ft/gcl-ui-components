@@ -49,7 +49,7 @@ ssot_path: gcl-ui-components/AGENTS.md
 | **GAM-SPEC-066** — Inventory System spec approved | ✅ CLEARED — approved docs-gdd#40, merged 2026-05-26 | `gcp-aethel-docs-gdd/` |
 
 When all three are approved, remove this section and implement a full AGENTS.md following
-the workspace AGENTS.md pattern. The first implementation slice is described in `CLAUDE.md`.
+the workspace AGENTS.md pattern. The first implementation slice is described in `AGENTS.md`.
 
 ---
 
@@ -115,7 +115,7 @@ Full routing table: workspace `AGENTS.md §9 — Gap Identification Protocol`.
 
 **Status:** ✅ Migrated — Stage 2 (2026-05-18)
 
-This repo follows the Software Factory routing (workspace `CLAUDE.md §Orchestration Routing`):
+This repo follows the Software Factory routing (workspace `AGENTS.md §Orchestration Routing`):
 - This AGENTS.md is the authoritative source for stack, commands, and file boundaries.
 - Shared skills are available via `~/.claude/skills/` (symlinked from `gcs-plt-gemop/skills/`).
 - Enforcement hooks are registered in `.claude/settings.json`.
