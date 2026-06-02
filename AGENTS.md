@@ -9,7 +9,7 @@ reviewers: []
 creation_date: '2026-05-11'
 language: en
 summary: Per-repo onboarding guide for AI agents working on the gcl-ui-components stub library. ON ICE — explicit activation gates required before any implementation.
-last_updated_date: '2026-05-12'
+last_updated_date: '2026-06-02'
 knowledgeGuardian:
 - Béatrice (GCT-MGT-SPM-001)
 metadata:
@@ -46,7 +46,7 @@ ssot_path: gcl-ui-components/AGENTS.md
 |------|--------|---------|
 | **ENG-ADR-07x** — UI framework selection ADR approved | NOT YET WRITTEN | `gcp-aethel-architecture/` |
 | **GAM-SPEC-049** — XP Leveling MVP spec approved | NOT YET APPROVED | `gcp-aethel-docs-gdd/` |
-| **GAM-SPEC-066** — Inventory System spec approved | NOT YET APPROVED | `gcp-aethel-docs-gdd/` |
+| **GAM-SPEC-066** — Inventory System spec approved | ✅ CLEARED — approved docs-gdd#40, merged 2026-05-26 | `gcp-aethel-docs-gdd/` |
 
 When all three are approved, remove this section and implement a full AGENTS.md following
 the workspace AGENTS.md pattern. The first implementation slice is described in `CLAUDE.md`.
