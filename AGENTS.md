@@ -59,19 +59,24 @@ Shared UI component library for the Aethel platform. Currently a **stub** — no
 
 **Phase status:** On ice per ENG-ADR-068 — implementation blocked on ENG-ADR-07x + GDD approvals.
 
-## Quick Commands
+## Entry-Point Matrix & Hot-Path Boundaries
 
-| Task | Command |
-|------|---------|
-| Set up dev environment | `./onboard.sh` |
-| Run tests | `./test.sh` |
+| Entry Point | Purpose | Hot-Path | Generated Output |
+|---|---|---|---|
+| `./onboard.sh` | Install dependencies (idempotent) | No | `node_modules/` |
+| `./test.sh` | Run tests (stub only) | Yes | None yet |
+
+## Generated Outputs
+
+- `node_modules/`: Local dependencies installed via `./onboard.sh`.
 
 ## Architecture
 
-```
+```text
 gcl-ui-components/
   src/           — TypeScript/UI source (empty — Phase 5+ work)
   tests/         — Test files (empty — Phase 5+ work)
+  node_modules/  — (generated) Installed local dependencies
   package.json   — devDependencies only (commitlint)
 ```
 
@@ -116,6 +121,7 @@ Full routing table: workspace `AGENTS.md §9 — Gap Identification Protocol`.
 **Status:** ✅ Migrated — Stage 2 (2026-05-18)
 
 This repo follows the Software Factory routing (workspace `AGENTS.md §Orchestration Routing`):
+
 - This AGENTS.md is the authoritative source for stack, commands, and file boundaries.
 - Shared skills are available via `~/.claude/skills/` (symlinked from `gcs-plt-gemop/skills/`).
 - Enforcement hooks are registered in `.claude/settings.json`.

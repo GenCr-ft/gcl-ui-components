@@ -28,6 +28,13 @@ metadata:
 
 # gcl-ui-components
 
+> **Repo Card**
+>
+> - **Type:** Shared Library (Stub)
+> - **Stack:** Godot 4 Control Nodes (Pending framework ADR)
+> - **Role:** Shared UI components for the Aethel platform
+> - **Status:** ON ICE
+
 Shared UI component library for the Aethel platform.
 
 ## Overview
@@ -58,12 +65,12 @@ This repository contains:
 - **Governance**: Commit and branching policies aligned with studio standards.
 - **Orientation**: Standardized [AGENTS.md](./AGENTS.md) for agent assistance.
 
-## Quick Start
+## Quick Start & Entry-Point Matrix
 
-```bash
-./onboard.sh   # install dependencies (idempotent)
-./test.sh      # run tests (no tests yet — stub exits 0)
-```
+| Entry Point | Purpose | Hot-Path | Generated Output |
+|---|---|---|---|
+| `./onboard.sh` | Install dependencies (idempotent) | No | `node_modules/` |
+| `./test.sh` | Run tests (stub only) | Yes | None yet |
 
 ## Contributing
 
