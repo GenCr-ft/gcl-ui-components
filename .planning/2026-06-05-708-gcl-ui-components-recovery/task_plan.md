@@ -2,7 +2,7 @@
 docId: GOV-PLAN-001
 issue-id: GenCr-ft/gcp-aethel-backlog#708
 github-issue: GenCr-ft/gcp-aethel-backlog#708
-status: in_progress
+status: complete
 created: '2026-06-05'
 scope: gcl-ui-components-actionability-recovery
 ---
@@ -13,7 +13,7 @@ scope: gcl-ui-components-actionability-recovery
 Raise `gcl-ui-components` actionability by shrinking run instructions and making generated output, tests, and hot-path boundaries explicit.
 
 ## Current Phase
-Phase 3
+Phase 5
 
 ## Phases
 
@@ -32,17 +32,17 @@ Phase 3
 - [x] Add compact repo card and entry-point matrix to `README.md`.
 - [x] Mark generated outputs and hot-paths in `AGENTS.md`.
 - [x] Add entry to `CHANGELOG.md`.
-- **Status:** in_progress
+- **Status:** complete
 
 ### Phase 4: Testing & Verification
-- [ ] Run SSoT linters to ensure formatting is correct.
-- [ ] Commit changes with conventional commits.
-- **Status:** pending
+- [x] Run SSoT linters to ensure formatting is correct.
+- [x] Commit changes with conventional commits.
+- **Status:** complete
 
 ### Phase 5: Delivery
-- [ ] Open Pull Request resolving #708.
-- [ ] Close #709 and #710 if they exist (or update #708).
-- **Status:** pending
+- [x] Open Pull Request resolving #708.
+- [x] Close #709 and #710 if they exist (or update #708).
+- **Status:** complete
 
 ## Decisions Made
 | Decision | Rationale |
