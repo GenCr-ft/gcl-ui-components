@@ -1,4 +1,4 @@
-# Canonical yamllint configuration — SSoT: gcs-devops-standards/.yamllint.yaml
+# Canonical yamllint configuration — SSoT: gcs-core-governance/config-engines/.yamllint.yaml
 extends: default
 
 rules:
