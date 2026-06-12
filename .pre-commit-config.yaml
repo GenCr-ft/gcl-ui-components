@@ -67,7 +67,7 @@ repos:
       - id: markdownlint
         args: ["--config", ".markdownlint.yaml"]
 
-    # ===== Gencraft SSoT Linters (Custom Hooks) =====
+      # ===== Gencraft SSoT Linters (Custom Hooks) =====
   - repo: local
     hooks:
       - id: metadata-linter
