@@ -39,3 +39,16 @@ env/
 # Java (for completeness)
 *.class
 *.jar
+
+# Godot (ENG-ADR-089)
+# Commit .godot/global_script_class_cache.cfg + .godot/.gdignore so the headless
+# GUT runner has the class registry at startup (no editor scan in CI).
+# Everything else under .godot/ is machine-specific and regenerated on import.
+.godot/editor/
+.godot/uid_cache.bin
+.godot/imported/
+*.import
+# GUT test output
+test-results/
+# Agent planning scratch (never commit)
+.planning/

@@ -1,0 +1,20 @@
+; Engine configuration file.
+; gcl-ui-components — Godot 4.5 addon host project.
+;
+; Minimal project root required for the GUT headless test runner
+; (ENG-ADR-089). Intentionally does NOT register GUT under
+; [editor_plugins] — doing so breaks the headless runner
+; (studio guidance, workspace MEMORY.md).
+
+config_version=5
+
+[application]
+
+config/name="gcl-ui-components"
+config/description="Aethel shared UI component library (Godot addon)."
+config/features=PackedStringArray("4.5", "GL Compatibility")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
