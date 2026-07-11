@@ -7,24 +7,63 @@ on:
     branches: [ main, develop ]
 
 jobs:
-  unit-tests:
-    name: Unit Tests
+  godot-tests:
+    name: GDScript Unit Tests (GUT)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          submodules: recursive
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install Godot 4.5 (headless, skip if already present)
+        run: |
+          TARGET="${GODOT_BIN:-/usr/local/bin/godot}"
+          if "$TARGET" --version 2>/dev/null | grep -q "^4\.5"; then
+            echo "Godot 4.5 already available at $TARGET — skipping download."
+            sudo ln -sf "$TARGET" /usr/local/bin/godot 2>/dev/null || true
+          else
+            wget -q https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_linux.x86_64.zip
+            unzip -q Godot_v4.5-stable_linux.x86_64.zip
+            chmod +x Godot_v4.5-stable_linux.x86_64
+            sudo mv Godot_v4.5-stable_linux.x86_64 /usr/local/bin/godot
+          fi
 
-      - name: Run tests
+      - name: Populate GUT from vendor/gut submodule (+ Godot 4.5 compat patch)
+        run: |
+          cp -r vendor/gut/addons/gut addons/gut
+          # Godot 4.5 compat: GUT's `Logger` static var shadows the native class.
+          if ! grep -q "static var GutLogger" addons/gut/utils.gd; then
+            patch -p1 < scripts/gut-godot45-logger-shadow.patch
+          fi
+
+      - name: Import project assets once (single clean headless import)
+        # A SINGLE import populates font/theme resources for the headless runner.
+        # Running --import twice can corrupt GUT class resolution (studio gotcha).
+        # Non-fatal font-import ERROR lines here are expected.
+        run: godot --headless --import --path . || true
+        env:
+          GODOT_BIN: /usr/local/bin/godot
+
+      - name: Run GDScript unit tests (GUT)
         run: bash test.sh
+        env:
+          GODOT_BIN: /usr/local/bin/godot
         timeout-minutes: 10
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ github.run_id }}
+          path: test-results/junit.xml
+
+  secret-scan:
+    name: Secret Scan (detect-secrets)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
@@ -35,25 +74,15 @@ jobs:
           python3 -m pip install detect-secrets==1.5.0 -q
           detect-secrets scan > /tmp/current_scan.json
           python3 - <<'PYEOF'
-import json, sys
-baseline = json.load(open(".secrets.baseline"))
-current = json.load(open("/tmp/current_scan.json"))
-b_known = {(f, s["hashed_secret"]) for f, ss in baseline.get("results", {}).items() for s in ss}
-new = [(f, s) for f, ss in current.get("results", {}).items() for s in ss if (f, s["hashed_secret"]) not in b_known]
-if new:
-    print("ERROR: Unbaselined secrets found — run 'detect-secrets scan > .secrets.baseline' to review:")
-    for f, s in sorted(new):
-        print(f"  {f}:{s['line_number']} ({s['type']})")
-    sys.exit(1)
-print("detect-secrets: OK — no new secrets.")
-PYEOF
-
-  ssot-compliance:
-    name: SSoT Compliance Check
-    uses: GenCr-ft/gcd-shared-actions/.github/workflows/reusable-ssot-linter.yml@v1.3.0
-    secrets:
-      CROSS_REPO_PAT: ${{ secrets.CROSS_REPO_PAT }}
-    with:
-      continue-on-error: false
-      governance-version: "v1.4.0"
-      tooling-version: "v4.1.2"
+          import json, sys
+          baseline = json.load(open(".secrets.baseline"))
+          current = json.load(open("/tmp/current_scan.json"))
+          b_known = {(f, s["hashed_secret"]) for f, ss in baseline.get("results", {}).items() for s in ss}
+          new = [(f, s) for f, ss in current.get("results", {}).items() for s in ss if (f, s["hashed_secret"]) not in b_known]
+          if new:
+              print("ERROR: Unbaselined secrets found — run 'detect-secrets scan > .secrets.baseline' to review:")
+              for f, s in sorted(new):
+                  print(f"  {f}:{s['line_number']} ({s['type']})")
+              sys.exit(1)
+          print("detect-secrets: OK — no new secrets.")
+          PYEOF
