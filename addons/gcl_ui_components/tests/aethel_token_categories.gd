@@ -26,4 +26,4 @@ static func styleboxes() -> Array:
 
 
 static func fonts() -> Array:
-	return [AethelTokens.FONT_BODY, AethelTokens.FONT_HEADING]
+	return [AethelTokens.F_BODY, AethelTokens.F_HEADING]
