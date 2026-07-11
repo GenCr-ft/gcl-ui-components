@@ -1,0 +1,35 @@
+[gd_resource type="Theme" load_steps=7 format=3]
+
+[sub_resource type="SystemFont" id="SystemFont_v2ugw"]
+
+[sub_resource type="SystemFont" id="SystemFont_ooqd2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uwqwe"]
+bg_color = Color(0.18, 0.18, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgl3q"]
+bg_color = Color(0.18, 0.18, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5u2qv"]
+bg_color = Color(0.18, 0.18, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ygyug"]
+bg_color = Color(0.18, 0.18, 0.2, 1)
+
+[resource]
+AethelUI/colors/c_bg_overlay = Color(0, 0, 0, 0.6)
+AethelUI/colors/c_bg_primary = Color(0.12, 0.12, 0.14, 1)
+AethelUI/colors/c_bg_secondary = Color(0.18, 0.18, 0.2, 1)
+AethelUI/colors/c_border_default = Color(0.3, 0.3, 0.33, 1)
+AethelUI/colors/c_health_fill = Color(0.7, 0.15, 0.15, 1)
+AethelUI/colors/c_hunger_fill = Color(0.72, 0.5, 0.12, 1)
+AethelUI/colors/c_stamina_fill = Color(0.15, 0.6, 0.2, 1)
+AethelUI/colors/c_text_accent = Color(0.82, 0.7, 0.32, 1)
+AethelUI/colors/c_text_default = Color(0.9, 0.9, 0.9, 1)
+AethelUI/colors/c_text_disabled = Color(0.5, 0.5, 0.5, 1)
+AethelUI/fonts/font_body = SubResource("SystemFont_v2ugw")
+AethelUI/fonts/font_heading = SubResource("SystemFont_ooqd2")
+AethelUI/styles/sb_button_hover = SubResource("StyleBoxFlat_uwqwe")
+AethelUI/styles/sb_button_normal = SubResource("StyleBoxFlat_kgl3q")
+AethelUI/styles/sb_button_pressed = SubResource("StyleBoxFlat_5u2qv")
+AethelUI/styles/sb_panel_default = SubResource("StyleBoxFlat_ygyug")
