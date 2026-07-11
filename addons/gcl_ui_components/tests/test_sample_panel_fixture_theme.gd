@@ -62,6 +62,31 @@ func test_fixture_leaves_no_orphans() -> void:
 	assert_no_new_orphans("instantiating the fixture must not leak orphan nodes")
 
 
+func test_theme_type_variation_resolves_without_explicit_type() -> void:
+	# [DESIGN] #508 §1 promises components set theme_type_variation = &"AethelUI"
+	# and then call get_theme_color(TOKEN) with NO explicit type arg. That only
+	# works when the Theme declares AethelUI/base_type; this guards the implicit
+	# resolution path that F0.4 components (AethelButton, etc.) depend on.
+	var root := _instantiate_in_tree()
+	assert_not_null(root)
+	if root == null:
+		return
+	await get_tree().process_frame
+	assert_eq(
+		root.theme_type_variation, AethelTokens.TYPE_AETHEL_UI,
+		"fixture root must declare theme_type_variation = AethelUI"
+	)
+	# No explicit type argument — resolution must flow through the variation.
+	assert_true(
+		root.has_theme_color(AethelTokens.C_BG_PRIMARY),
+		"C_BG_PRIMARY must resolve via theme_type_variation without an explicit type"
+	)
+	assert_eq(
+		root.get_theme_color(AethelTokens.C_BG_PRIMARY), Color.MAGENTA,
+		"implicit-variation lookup must resolve the same MAGENTA placeholder"
+	)
+
+
 func test_unknown_token_key_resolves_false() -> void:
 	# Unhappy path: a key that is not a declared token must NOT resolve.
 	var theme := load(THEME_PATH) as Theme

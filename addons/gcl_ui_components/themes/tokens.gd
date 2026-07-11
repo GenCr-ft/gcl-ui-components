@@ -51,7 +51,11 @@ const SB_BUTTON_DISABLED: StringName = &"sb_button_disabled"
 const F_BODY: StringName = &"f_body"
 const F_HEADING: StringName = &"f_heading"
 
-# ── Font-size slots (int constants resolved via Theme.has_font_size) ────────────
+# ── Font-size slots (int; resolved via Theme.has_font_size) ─────────────────────
+# NOTE: aethel_base.tres uses a placeholder value of 1 (not 0) for these. Godot
+# treats a Theme font size of 0 as the "unset" sentinel and does NOT register the
+# slot, so has_font_size() would return false. Spacing constants below are safe
+# at 0 (has_constant registers 0). Do not "normalise" the font sizes to 0.
 const FS_BODY: StringName = &"fs_body"
 const FS_HEADING: StringName = &"fs_heading"
 
