@@ -14,26 +14,19 @@ extends GutTest
 
 const SCENE_PATH := "res://addons/gcl_ui_components/scenes/sample_panel.tscn"
 const THEME_PATH := "res://addons/gcl_ui_components/themes/aethel_base.tres"
+const TokenCats := preload("res://addons/gcl_ui_components/tests/aethel_token_categories.gd")
 
 
 func _color_tokens() -> Array:
-	return [
-		AethelTokens.C_BG_PRIMARY, AethelTokens.C_BG_SECONDARY, AethelTokens.C_BG_OVERLAY,
-		AethelTokens.C_TEXT_DEFAULT, AethelTokens.C_TEXT_ACCENT, AethelTokens.C_TEXT_DISABLED,
-		AethelTokens.C_HEALTH_FILL, AethelTokens.C_STAMINA_FILL, AethelTokens.C_HUNGER_FILL,
-		AethelTokens.C_BORDER_DEFAULT,
-	]
+	return TokenCats.colors()
 
 
 func _stylebox_tokens() -> Array:
-	return [
-		AethelTokens.SB_PANEL_DEFAULT, AethelTokens.SB_BUTTON_NORMAL,
-		AethelTokens.SB_BUTTON_HOVER, AethelTokens.SB_BUTTON_PRESSED,
-	]
+	return TokenCats.styleboxes()
 
 
 func _font_tokens() -> Array:
-	return [AethelTokens.FONT_BODY, AethelTokens.FONT_HEADING]
+	return TokenCats.fonts()
 
 
 func _instantiate_in_tree() -> Control:
