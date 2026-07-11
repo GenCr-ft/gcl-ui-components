@@ -29,6 +29,14 @@ func _font_tokens() -> Array:
 	return TokenCats.fonts()
 
 
+func _font_size_tokens() -> Array:
+	return TokenCats.font_sizes()
+
+
+func _constant_tokens() -> Array:
+	return TokenCats.constants()
+
+
 func _instantiate_in_tree() -> Control:
 	var packed: PackedScene = load(SCENE_PATH) as PackedScene
 	if packed == null:
@@ -80,6 +88,16 @@ func test_all_tokens_resolve_through_control_api() -> void:
 		assert_true(
 			root.has_theme_font(token, type),
 			"Control must resolve font '%s' under '%s'" % [String(token), String(type)]
+		)
+	for token in _font_size_tokens():
+		assert_true(
+			root.has_theme_font_size(token, type),
+			"Control must resolve font_size '%s' under '%s'" % [String(token), String(type)]
+		)
+	for token in _constant_tokens():
+		assert_true(
+			root.has_theme_constant(token, type),
+			"Control must resolve constant '%s' under '%s'" % [String(token), String(type)]
 		)
 
 

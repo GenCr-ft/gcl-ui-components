@@ -9,9 +9,11 @@
 ## [DESIGN] #508 §1). Controls use these constants instead of magic strings, e.g.
 ##   get_theme_color(AethelTokens.C_BG_PRIMARY, "AethelUI")
 ##
-## Catalogue scope: F0.2 [DESIGN] #505 §2 skeleton (16 tokens). F0.3 (#417)
-## finalises the fuller catalogue (adds FS_*, SP_*, SB_BUTTON_DISABLED;
-## renames FONT_* -> F_*) per [DESIGN] #508 §2.
+## Catalogue scope: F0.3 (#417) finalises the full 22-token catalogue per
+## [DESIGN] #508 §2 — 10 colour, 4 typography (F_BODY/F_HEADING font keys +
+## FS_BODY/FS_HEADING font-size keys), 5 StyleBox (incl. SB_BUTTON_DISABLED),
+## 3 spacing (SP_MARGIN_SM/MD/LG). Supersedes the F0.2 #505 §2 16-token
+## skeleton (FONT_* renamed to F_*).
 ##
 ## Refs: GenCr-ft/gcs-project-management#416, #505, #508, ENG-ADR-089.
 class_name AethelTokens
@@ -43,7 +45,21 @@ const SB_PANEL_DEFAULT: StringName = &"sb_panel_default"
 const SB_BUTTON_NORMAL: StringName = &"sb_button_normal"
 const SB_BUTTON_HOVER: StringName = &"sb_button_hover"
 const SB_BUTTON_PRESSED: StringName = &"sb_button_pressed"
+const SB_BUTTON_DISABLED: StringName = &"sb_button_disabled"
 
 # ── Font slots ────────────────────────────────────────────────────────────────
-const FONT_BODY: StringName = &"font_body"
-const FONT_HEADING: StringName = &"font_heading"
+const F_BODY: StringName = &"f_body"
+const F_HEADING: StringName = &"f_heading"
+
+# ── Font-size slots (int; resolved via Theme.has_font_size) ─────────────────────
+# NOTE: aethel_base.tres uses a placeholder value of 1 (not 0) for these. Godot
+# treats a Theme font size of 0 as the "unset" sentinel and does NOT register the
+# slot, so has_font_size() would return false. Spacing constants below are safe
+# at 0 (has_constant registers 0). Do not "normalise" the font sizes to 0.
+const FS_BODY: StringName = &"fs_body"
+const FS_HEADING: StringName = &"fs_heading"
+
+# ── Spacing constants (int, pixels; resolved via Theme.has_constant) ────────────
+const SP_MARGIN_SM: StringName = &"sp_margin_sm"
+const SP_MARGIN_MD: StringName = &"sp_margin_md"
+const SP_MARGIN_LG: StringName = &"sp_margin_lg"
