@@ -6,41 +6,35 @@
 ## (pressed_action carries a semantic button_id), token-bound
 ## (theme_type_variation = AethelUI), no hard-coded visual values.
 ##
-## The scene is resolved via runtime load() (not preload) so this file compiles
-## and RED-fails cleanly before the component exists.
+## Uses the canonical typed form — preload + `as AethelButton` — which also
+## exercises headless class resolution via the committed
+## .godot/global_script_class_cache.cfg (the F0.2/#505 CI contract): if the
+## AethelButton class registration were missing from the cache this script would
+## fail to parse in CI. add_child_autofree keeps the tree orphan-free per
+## CONVENTIONS §8.
 ##
 ## Refs: GenCr-ft/gcs-project-management#420, #509, ENG-ADR-089.
 extends GutTest
 
-const BUTTON_SCENE := "res://addons/gcl_ui_components/scenes/aethel_button.tscn"
+const AethelButtonScene := preload("res://addons/gcl_ui_components/scenes/aethel_button.tscn")
 const TEST_ID := &"test_btn"
 
-var _button: Button  # AethelButton extends Button
+var _button: AethelButton
 
 
 func before_each() -> void:
-	_button = null
-	var packed := load(BUTTON_SCENE) as PackedScene
-	if packed == null:
-		return
-	_button = packed.instantiate() as Button
-	if _button != null and _button.has_method("set_button_id"):
-		_button.set_button_id(TEST_ID)
-	if _button != null:
-		add_child(_button)
-		await get_tree().process_frame
+	_button = AethelButtonScene.instantiate() as AethelButton
+	_button.set_button_id(TEST_ID)
+	add_child_autofree(_button)
+	await get_tree().process_frame
 
 
 func after_each() -> void:
-	if _button != null:
-		_button.queue_free()
 	_button = null
 
 
-func test_scene_exists_and_is_a_button() -> void:
-	var packed := load(BUTTON_SCENE) as PackedScene
-	assert_not_null(packed, "aethel_button.tscn must exist at " + BUTTON_SCENE)
-	assert_not_null(_button, "AethelButton must instantiate")
+func test_scene_instantiates_as_aethel_button() -> void:
+	assert_not_null(_button, "AethelButton must instantiate from its scene")
 	if _button == null:
 		return
 	assert_true(_button is Button, "AethelButton must extend Button")

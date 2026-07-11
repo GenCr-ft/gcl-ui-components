@@ -4,7 +4,7 @@
 ## conventions doc MUST define nine mandatory sections. This test gates their
 ## presence (a structural contract, not prose review) so the doc cannot silently
 ## lose a required section, and asserts the state-binding section carries both a
-## WRONG and a CORRECT example (the §12 no-node-traversal invariant).
+## WRONG and a CORRECT example (the §5 no-node-traversal rule).
 ##
 ## Refs: GenCr-ft/gcs-project-management#419, #509, ENG-ADR-089.
 extends GutTest
@@ -42,13 +42,30 @@ func test_conventions_doc_exists() -> void:
 	)
 
 
+func _heading_lines() -> PackedStringArray:
+	# Section headings only (lines beginning with '#'), lowercased — so an
+	# incidental mention in prose cannot satisfy the section contract.
+	var headings := PackedStringArray()
+	for line in _read_doc().split("\n"):
+		var stripped := line.strip_edges()
+		if stripped.begins_with("#"):
+			headings.append(stripped.to_lower())
+	return headings
+
+
 func test_all_nine_sections_present() -> void:
-	var text := _read_doc().to_lower()
-	assert_false(text.is_empty(), "CONVENTIONS.md must be non-empty")
+	assert_false(_read_doc().is_empty(), "CONVENTIONS.md must be non-empty")
+	var headings := _heading_lines()
 	for section in REQUIRED_SECTIONS:
+		var needle: String = String(section).to_lower()
+		var found := false
+		for h in headings:
+			if h.contains(needle):
+				found = true
+				break
 		assert_true(
-			text.contains(section.to_lower()),
-			"CONVENTIONS.md must document the '%s' section" % section
+			found,
+			"CONVENTIONS.md must document the '%s' section as a heading" % section
 		)
 
 

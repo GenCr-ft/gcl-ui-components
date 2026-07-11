@@ -57,7 +57,7 @@ responsibility. Components emit generic, UI-level signals only.
 Components **must not** reach into the node tree to read external state. All
 state arrives via typed signals or `set_<property>()` setters.
 
-**WRONG — direct node traversal (prohibited; violates the §12 no-traversal invariant):**
+**WRONG — direct node traversal (prohibited by this §5 no-traversal rule):**
 
 ```gdscript
 func _process(_delta: float) -> void:
@@ -94,7 +94,9 @@ mutate inner node properties directly; the component owns its subtree.
 One test file per component in `tests/`, named `test_aethel_<name>.gd`. It
 **must**:
 
-- use `before_each` (instantiate + add to tree) and `after_each` (`queue_free`) teardown;
+- use `before_each` (instantiate + `add_child_autofree`) and `after_each` (null the
+  reference) teardown — `add_child_autofree` guarantees GUT frees the node, so the
+  suite ends with no unfreed children or orphans;
 - contain **≥1 happy-path** test (valid input → expected signal / state);
 - contain **≥1 unhappy-path** test (disabled / empty / edge input → handled
   gracefully, no crash, no orphan). Silent failure is preferred over a crash for
@@ -110,4 +112,7 @@ Run through this before opening a PR:
 - [ ] No hard-coded `Color` / `Font` / `StyleBox` value in `.gd` or `.tscn`
 - [ ] Signals are past-tense with typed parameters (§4)
 - [ ] Test file present with `before_each`/`after_each` + ≥1 happy + ≥1 unhappy path
+- [ ] After adding/renaming a `class_name`, regenerate and commit
+      `.godot/global_script_class_cache.cfg` (CI resolves classes from the
+      committed cache with no `--import` — an unlisted class fails to parse there)
 - [ ] CONVENTIONS.md consulted (this document)
