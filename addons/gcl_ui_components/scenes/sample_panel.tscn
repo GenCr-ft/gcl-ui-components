@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Theme" path="res://addons/gcl_ui_components/themes/aethel_base.tres" id="1_tehpo"]
+
+[node name="SamplePanel" type="PanelContainer"]
+theme = ExtResource("1_tehpo")
+theme_type_variation = &"AethelUI"
+
+[node name="Body" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Heading" type="Label" parent="Body"]
+layout_mode = 2
+theme_type_variation = &"AethelUI"
+text = "Aethel UI — sample panel (placeholder)"
+
+[node name="BodyText" type="Label" parent="Body"]
+layout_mode = 2
+theme_type_variation = &"AethelUI"
+text = "Tokens resolve via the AethelUI theme type."
