@@ -34,6 +34,10 @@ const EXPECTED := {
 	"FONT_HEADING": &"font_heading",
 }
 
+# Non-token constants that legitimately live in AethelTokens but are not design
+# tokens (so they are excluded from the exhaustive token-set equality check).
+const NON_TOKEN_CONSTANTS := ["TYPE_AETHEL_UI"]
+
 
 func _load_token_constants() -> Dictionary:
 	var script: GDScript = load(TOKENS_PATH) as GDScript
@@ -52,6 +56,28 @@ func test_all_name_constants_declared() -> void:
 	assert_false(consts.is_empty(), "AethelTokens must declare token constants")
 	for name in EXPECTED:
 		assert_true(consts.has(name), "AethelTokens missing constant: " + name)
+
+
+func test_token_set_is_exhaustive() -> void:
+	# Exact set-equality: every token constant (excluding non-token constants
+	# like TYPE_AETHEL_UI) must be in EXPECTED, and the counts must match — so a
+	# stray or typo'd extra token constant fails the contract.
+	var consts := _load_token_constants()
+	var token_names := []
+	for name in consts:
+		if not NON_TOKEN_CONSTANTS.has(name):
+			token_names.append(name)
+	assert_eq(
+		token_names.size(),
+		EXPECTED.size(),
+		"AethelTokens must declare exactly %d design-token constants (found %d): %s"
+			% [EXPECTED.size(), token_names.size(), str(token_names)]
+	)
+	for name in token_names:
+		assert_true(
+			EXPECTED.has(name),
+			"AethelTokens declares an unexpected token constant: " + name
+		)
 
 
 func test_name_constants_have_expected_string_values() -> void:
