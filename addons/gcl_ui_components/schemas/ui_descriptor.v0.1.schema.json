@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gencr-ft.dev/aethel/schemas/ui_descriptor.v0.1.schema.json",
+  "title": "Aethel UI Descriptor",
+  "description": "Declarative UI descriptor v0.1 (ENG-ADR-089, [DESIGN] gcs-project-management#505 §3). A descriptor is a pure data document: a Control tree, a Theme override, and slot bindings. It carries NO scripting and NO player identity.",
+  "type": "object",
+  "required": ["version", "control_tree"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "const": "0.1",
+      "description": "Schema version. v0.1 is the F0.2 bootstrap contract."
+    },
+    "control_tree": {
+      "$ref": "#/$defs/controlNode",
+      "description": "Root Control node of the declarative UI tree."
+    },
+    "theme_override": {
+      "type": "object",
+      "description": "Optional per-descriptor Theme item overrides (AethelUI type)."
+    },
+    "slot_bindings": {
+      "type": "object",
+      "description": "Named runtime slots the host binds at instantiation. Identity is bound HERE at runtime — it is never a literal in the descriptor (see §12 invariant)."
+    }
+  },
+  "$defs": {
+    "identityInvariant": {
+      "$comment": "§12 multiplayer-readiness invariant. Identity is a RUNTIME binding, never embedded as a literal in a UI descriptor. These property names are forbidden ('not': {}) at ANY nesting depth. This canonical list is the single source of truth read by ui_descriptor_validator.gd.",
+      "forbiddenPropertyNames": ["player_id", "user_id", "actor_id", "identity"]
+    },
+    "controlNode": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Godot Control class name (e.g. PanelContainer, Label, Button)."
+        },
+        "name": {
+          "type": "string",
+          "description": "Optional node name within the tree."
+        },
+        "theme_type": {
+          "type": "string",
+          "description": "Optional custom theme type variation (defaults to AethelUI)."
+        },
+        "children": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/controlNode"}
+        }
+      },
+      "propertyNames": {
+        "not": {"enum": ["player_id", "user_id", "actor_id", "identity"]}
+      }
+    }
+  },
+  "$comment": "Out of scope for v0.1 (a future ADR is required to add any of these): scripted callbacks (Lua / GDScript-in-JSON), signal-wiring declarations, and animation-curve definitions. v0.1 is strictly declarative."
+}
