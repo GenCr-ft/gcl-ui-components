@@ -31,8 +31,36 @@ else
   echo "✓ Godot: $GODOT ($("$GODOT" --version 2>/dev/null | head -1))"
 fi
 
-# GUT 9.3.0 is vendored under addons/gut/ — no package manager install required.
-echo "✓ GUT 9.3.0 vendored at addons/gut/"
+# ── Populate GUT 9.3.0 from the vendor/gut submodule ─────────────────────────
+# GUT is pinned as a git submodule at vendor/gut (v9.3.0, same commit as
+# gcp-aethel-client) and copied into addons/gut. addons/gut is .gitignored —
+# it is regenerated here, never committed.
+if [ ! -d "$SCRIPT_DIR/vendor/gut/addons/gut" ]; then
+  echo "Initialising GUT submodule (vendor/gut)…"
+  git submodule update --init vendor/gut
+fi
+if [ ! -d "$SCRIPT_DIR/addons/gut" ]; then
+  echo "Copying GUT 9.3.0 from vendor/gut into addons/gut…"
+  mkdir -p "$SCRIPT_DIR/addons"
+  cp -r "$SCRIPT_DIR/vendor/gut/addons/gut" "$SCRIPT_DIR/addons/gut"
+fi
+# Godot 4.5 compat: rename GUT's `Logger` static var (shadows the native 4.5
+# Logger class) → `GutLogger`. Idempotent — skipped if already applied.
+if ! grep -q "static var GutLogger" "$SCRIPT_DIR/addons/gut/utils.gd"; then
+  echo "Applying GUT→Godot 4.5 Logger-shadow compat patch…"
+  patch -p1 -d "$SCRIPT_DIR" < "$SCRIPT_DIR/scripts/gut-godot45-logger-shadow.patch"
+fi
+echo "✓ GUT 9.3.0 installed at addons/gut/ (from vendor/gut submodule, Godot 4.5 patched)"
+
+# ── Import assets once (headless) so GUT class resolution is populated ────────
+# A SINGLE clean import is required; running --import twice can corrupt GUT
+# class resolution (workspace MEMORY.md). test.sh deliberately does NOT import.
+# The font/theme resources emit non-fatal "ERROR:" lines during first import —
+# these are expected and do not fail onboarding.
+if [ -n "$GODOT" ]; then
+  echo "Importing project assets once (expect non-fatal font-import ERROR lines)…"
+  "$GODOT" --headless --import --path "$SCRIPT_DIR" >/dev/null 2>&1 || true
+fi
 
 # Optional: install commit-lint tooling if package.json is present.
 if [ -f "$SCRIPT_DIR/package.json" ] && command -v npm &>/dev/null; then

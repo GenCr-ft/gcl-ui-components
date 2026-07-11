@@ -1,0 +1,40 @@
+# GUT 9.3.0 → Godot 4.5 compatibility patch (WI-416).
+#
+# Godot 4.5 introduced a native `Logger` class. GUT 9.3.0's utils.gd declares a
+# `static var Logger`, which shadows the native class and makes the script fail
+# to compile in headless mode ("The member 'Logger' shadows a native class").
+# This renames the static var to `GutLogger` (GUT accesses it only via
+# get_logger(), so no external call sites change).
+#
+# Applied by onboard.sh / test.sh to the copy in addons/gut (pinned to the
+# vendor/gut submodule at GUT v9.3.0 / 6fc7c17). If the pinned GUT is bumped and
+# upstream fixes this, delete this patch and the apply step.
+#
+# Idempotent: the apply step skips when addons/gut/utils.gd already declares
+# GutLogger. Applied with: patch -p1 -d "$SCRIPT_DIR"
+--- a/addons/gut/utils.gd
++++ b/addons/gut/utils.gd
+@@ -92,8 +92,8 @@
+ static var JunitXmlExport = LazyLoader.new('res://addons/gut/junit_xml_export.gd'):
+ 	get: return JunitXmlExport.get_loaded()
+ 	set(val): pass
+-static var Logger = LazyLoader.new('res://addons/gut/logger.gd') : # everything should use get_logger
+-	get: return Logger.get_loaded()
++static var GutLogger = LazyLoader.new('res://addons/gut/logger.gd') : # everything should use get_logger
++	get: return GutLogger.get_loaded()
+ 	set(val): pass
+ static var MethodMaker = LazyLoader.new('res://addons/gut/method_maker.gd'):
+ 	get: return MethodMaker.get_loaded()
+@@ -174,10 +174,10 @@
+ static var _lgr = null
+ static func get_logger():
+ 	if(_test_mode):
+-		return Logger.new()
++		return GutLogger.new()
+ 	else:
+ 		if(_lgr == null):
+-			_lgr = Logger.new()
++			_lgr = GutLogger.new()
+ 		return _lgr
+ 
+ 

@@ -40,6 +40,28 @@ if [ -z "$GODOT" ]; then
   exit 1
 fi
 
+# ── Ensure GUT is populated from the vendor/gut submodule ────────────────────
+# addons/gut is .gitignored and regenerated from vendor/gut (see onboard.sh).
+# test.sh self-bootstraps it so `./test.sh` works right after a submodule init.
+# NOTE: this does NOT run `--import` — headless class resolution relies on the
+# committed .godot/global_script_class_cache.cfg. Run ./onboard.sh once first to
+# import font/theme assets (a single clean import; see onboard.sh / README).
+if [ ! -d "$SCRIPT_DIR/addons/gut" ]; then
+  if [ -d "$SCRIPT_DIR/vendor/gut/addons/gut" ]; then
+    echo "Copying GUT plugin from vendor/gut to addons/gut…"
+    mkdir -p "$SCRIPT_DIR/addons"
+    cp -r "$SCRIPT_DIR/vendor/gut/addons/gut" "$SCRIPT_DIR/addons/gut"
+  else
+    echo "✗ GUT not found at vendor/gut/addons/gut." >&2
+    echo "  Run: git submodule update --init vendor/gut   (or ./onboard.sh)" >&2
+    exit 1
+  fi
+fi
+# Godot 4.5 compat: GUT's `Logger` static var shadows the native 4.5 Logger.
+if ! grep -q "static var GutLogger" "$SCRIPT_DIR/addons/gut/utils.gd"; then
+  patch -p1 -d "$SCRIPT_DIR" < "$SCRIPT_DIR/scripts/gut-godot45-logger-shadow.patch"
+fi
+
 echo "=== gcl-ui-components GDScript tests (GUT 9.3.0) ==="
 echo "Using Godot: $GODOT"
 
