@@ -1,15 +1,15 @@
 ---
 docId: ENG-AGEN-006
 title: AGENTS.md - gcl-ui-components
-version: 1.1.0
+version: 1.2.0
 authors:
 - Architecture Lead
 - Claude Sonnet 4.6
 reviewers: []
 creation_date: '2026-05-11'
 language: en
-summary: Per-repo onboarding guide for AI agents working on the gcl-ui-components stub library. ON ICE — explicit activation gates required before any implementation.
-last_updated_date: '2026-06-02'
+summary: Per-repo onboarding guide for AI agents working on the gcl-ui-components shared UI library. Freeze lifted per ENG-ADR-089 (approved 2026-07-10); Godot 4.5 GDScript addon consumed as a submodule.
+last_updated_date: '2026-07-10'
 knowledgeGuardian:
 - Béatrice (GCT-MGT-SPM-001)
 metadata:
@@ -20,9 +20,10 @@ metadata:
   - agent-instructions
   - ui
   - components
-  - typescript
-  - activation-gate
-  - on-ice
+  - godot
+  - gdscript
+  - gut
+  - addon
   scope: project-aethel
   domain: engineering
   doc-type: orientation-guide
@@ -34,30 +35,45 @@ ssot_path: gcl-ui-components/AGENTS.md
 ---
 # AGENTS.md — gcl-ui-components
 
-## STATUS: ON ICE — Do Not Activate Without Explicit Instructions
+## STATUS: ACTIVE — Freeze Lifted per ENG-ADR-089
 
-> **This repository is blocked.** Do not write any implementation code, add source files,
-> or open implementation PRs until ALL three activation gates below are cleared.
-> Architecture decision: ENG-ADR-068 (merged 2026-05-12).
+> The ON-ICE freeze imposed by ENG-ADR-068 has been **lifted**. The governing decision is
+> **ENG-ADR-089** (UI Framework Selection, `lifecycle-phase: approved`, 2026-07-10), which
+> *supersedes-in-part* the `gcl-ui-components` clause of ENG-ADR-068. This repository is
+> now a shared **spec + asset library** for the Aethel Godot client, not a web/TypeScript
+> component library.
+>
+> Metadata is unfrozen here (US #415). The structural addon bootstrap — `plugin.cfg`,
+> `plugin.gd`, placeholder `themes/aethel_base.tres`, `schemas/ui_descriptor.v0.1.schema.json`,
+> and the GUT harness — is delivered separately in **US #416** (design captured in
+> `[DESIGN]` sub-issue gcs-project-management#505).
 
-### Activation Gates (all three required)
+### Activation Gates — all satisfied
 
-| Gate | Status | Location |
-|------|--------|---------|
-| **ENG-ADR-07x** — UI framework selection ADR approved | NOT YET WRITTEN | `gcp-aethel-architecture/` |
-| **GAM-SPEC-049** — XP Leveling MVP spec approved | NOT YET APPROVED | `gcp-aethel-docs-gdd/` |
-| **GAM-SPEC-066** — Inventory System spec approved | ✅ CLEARED — approved docs-gdd#40, merged 2026-05-26 | `gcp-aethel-docs-gdd/` |
-
-When all three are approved, remove this section and implement a full AGENTS.md following
-the workspace AGENTS.md pattern. The first implementation slice is described in `AGENTS.md`.
+| Gate | Resolution |
+|------|-----------|
+| **ENG-ADR-07x** (= **ENG-ADR-089**) — UI framework ADR approved | ✅ MERGED / approved 2026-07-10 — supersedes-in-part ENG-ADR-068's freeze clause |
+| **GAM-SPEC-066** — Inventory System spec approved | ✅ CLEARED — approved docs-gdd#40, merged 2026-05-26 |
+| **GAM-SPEC-049** — XP Leveling MVP spec approved | ✅ GATE-WAIVED-FOR-SCOPE — Beatrice product ruling on gcs-project-management#505 (2026-07-10): F0.2 builds no XP-dependent UI. GAM-SPEC-049 remains a product gate for any future XP-related UI work item (XP/progress bar, level-up modal, attribute-point allocation screen). |
 
 ---
 
 ## Project Overview
 
-Shared UI component library for the Aethel platform. Currently a **stub** — no implementation yet. This library will provide reusable UI components shared across Aethel's web-facing surfaces.
+Shared UI component library for the Aethel platform, delivered as a **Godot 4.5 addon**
+(`addons/gcl_ui_components/`). It provides a base `Theme` resource + design tokens, reusable
+`Control`-scene templates, GDScript/GUT conventions, and a declarative, runtime-loadable
+UI-descriptor contract (the P-MOD / UGC non-preclusion anchor). Godot `Control` nodes are the
+mandatory rendering substrate (per ENG-ADR-056 + ENG-ADR-089).
 
-**Phase status:** On ice per ENG-ADR-068 — implementation blocked on ENG-ADR-07x + GDD approvals.
+**Consumption model:** the addon is consumed by `gcp-aethel-client` as a **git submodule** pinned
+at `vendor/gcl-ui-components/`, materialised into `res://addons/gcl_ui_components/` by the client's
+`onboard.sh` (mirroring the existing `vendor/gut/` pattern). Per Isaac's architectural decision on
+gcs-project-management#505, the pinned submodule SHA in `.gitmodules` is the single source of truth
+for the vendored version; the materialised addon directory is a build artefact and is `.gitignore`d
+downstream.
+
+**Phase status:** Active. This metadata slice (US #415) lifts the freeze; the addon skeleton lands in US #416.
 
 ## Quick Commands
 
@@ -66,29 +82,54 @@ Shared UI component library for the Aethel platform. Currently a **stub** — no
 | Set up dev environment | `./onboard.sh` |
 | Run tests | `./test.sh` |
 
+## Technology Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Engine | Godot 4.5 |
+| Language | GDScript |
+| Testing | GUT v9.3.0 (headless) |
+| Distribution | Godot addon (`addons/gcl_ui_components/`), consumed as a git submodule |
+
 ## Architecture
+
+Target layout once the addon skeleton lands (US #416 — see `[DESIGN]` gcs-project-management#505):
 
 ```
 gcl-ui-components/
-  src/           — TypeScript/UI source (empty — Phase 5+ work)
-  tests/         — Test files (empty — Phase 5+ work)
-  package.json   — devDependencies only (commitlint)
+  addons/
+    gcl_ui_components/
+      plugin.cfg       — Godot addon metadata
+      plugin.gd        — minimal EditorPlugin entrypoint
+      themes/          — base Theme resource + design tokens (values owned by Pixel, F0.3)
+      scenes/          — reusable Control scene templates (.tscn)
+      schemas/         — declarative UI-descriptor JSON Schema (Draft 2020-12)
+      tests/           — GUT headless test suites
+  project.godot        — minimal Godot 4.5 project root (required for GUT headless)
+  test.sh              — delegates to the GUT headless runner
 ```
 
 ## Critical Patterns
 
-**Stub status:** No source, test files, or test framework configured yet. `./test.sh` prints "no tests yet" and exits 0. Do not write any implementation until Phase 5 work items are assigned.
+**Metadata unfrozen; addon not yet bootstrapped.** As of US #415 the freeze is lifted and this
+AGENTS.md + README.md reflect the Godot/GDScript direction, but no `addons/`, `project.godot`, or
+source files exist yet — they land in US #416. `./test.sh` still prints "no tests yet" and exits 0
+until the GUT harness is committed in #416; do not change `test.sh` in the metadata slice.
+
+**Godot 4.5 rendering substrate.** All components are Godot `Control` nodes (ENG-ADR-056 + ENG-ADR-089).
+Do not introduce web frameworks (React/Svelte/Vue/web components) — that alternative was formally
+rejected in ENG-ADR-089.
 
 ## Known Issues
 
 | Ref | Description |
 |-----|-------------|
-| Phase 5 | No implementation yet — stub only |
+| US #416 | Addon skeleton (`plugin.cfg`/`plugin.gd`/`themes`/`schemas`/GUT harness) not yet committed |
 
 ## Commit & PR Conventions
 
 - Conventional Commits v1.0.0. Branch: `feat/`, `fix/`, `test/`, `chore/`.
-- Co-author trailer: Strictly prohibited in this workspace due to administrative blocks. Do NOT write or push commits containing the `Co-Authored-By` trailer.
+- Co-author trailer: Strictly prohibited per workspace policy. Do NOT write or push commits containing the `Co-Authored-By` trailer.
 
 ## Gap Protocol
 
@@ -127,6 +168,6 @@ This repo follows the Software Factory routing (workspace `AGENTS.md §Orchestra
 | `review-pr` | Technical code review of a pull request |
 | `pr-lifecycle` | Open, push, and manage PRs end-to-end |
 | `gencraft-git-workflow` | GenCr@ft branching and commit conventions |
-| `jest-unit-testing-typescript` | Jest unit test patterns for TypeScript |
-| `adr-authoring` | Writing Architecture Decision Records (framework decision pending) |
+| `gut-testing-godot45` | GUT v9.3.0 unit test patterns for GDScript in Godot 4.5 |
+| `adr-authoring` | Writing Architecture Decision Records (framework settled in ENG-ADR-089) |
 | `decision-advisor` | Structured analysis of architectural decisions |
