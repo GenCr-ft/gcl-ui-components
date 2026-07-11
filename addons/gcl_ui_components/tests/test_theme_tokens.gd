@@ -6,9 +6,10 @@
 ## Pixel and live in aethel_base.tres — see [HANDOFF] #510. Token key-existence
 ## against the loaded Theme Resource is a later F0.2/F0.3 cycle (#417/#418).
 ##
-## Token catalogue: F0.2 [DESIGN] #505 §2 skeleton. F0.3 (#417) finalises the
-## fuller 23-name catalogue (adds FS_*, SP_*, SB_BUTTON_DISABLED; renames
-## FONT_* -> F_*) per [DESIGN] #508.
+## Token catalogue: F0.2 [DESIGN] #505 §2 skeleton (16). F0.3 (#417) finalises
+## the full 22-name catalogue — 10 colour, 4 typography (adds FS_BODY/FS_HEADING),
+## 5 StyleBox (adds SB_BUTTON_DISABLED), 3 spacing (SP_MARGIN_SM/MD/LG); renames
+## FONT_* -> F_* — per [DESIGN] #508 §2.
 extends GutTest
 
 const TOKENS_PATH := "res://addons/gcl_ui_components/themes/tokens.gd"
@@ -16,6 +17,7 @@ const TOKENS_PATH := "res://addons/gcl_ui_components/themes/tokens.gd"
 # Expected constant name -> interned StringName key (the theme lookup name).
 # This is the CONTRACT under test, so the names are declared here explicitly.
 const EXPECTED := {
+	# ── Colour (10) ──
 	"C_BG_PRIMARY": &"c_bg_primary",
 	"C_BG_SECONDARY": &"c_bg_secondary",
 	"C_BG_OVERLAY": &"c_bg_overlay",
@@ -26,12 +28,21 @@ const EXPECTED := {
 	"C_STAMINA_FILL": &"c_stamina_fill",
 	"C_HUNGER_FILL": &"c_hunger_fill",
 	"C_BORDER_DEFAULT": &"c_border_default",
+	# ── Typography (4): font + font-size keys (F0.3 renames FONT_* -> F_*) ──
+	"F_BODY": &"f_body",
+	"F_HEADING": &"f_heading",
+	"FS_BODY": &"fs_body",
+	"FS_HEADING": &"fs_heading",
+	# ── StyleBox (5): adds SB_BUTTON_DISABLED for F0.4 unhappy-path ──
 	"SB_PANEL_DEFAULT": &"sb_panel_default",
 	"SB_BUTTON_NORMAL": &"sb_button_normal",
 	"SB_BUTTON_HOVER": &"sb_button_hover",
 	"SB_BUTTON_PRESSED": &"sb_button_pressed",
-	"FONT_BODY": &"font_body",
-	"FONT_HEADING": &"font_heading",
+	"SB_BUTTON_DISABLED": &"sb_button_disabled",
+	# ── Spacing constants (3) ──
+	"SP_MARGIN_SM": &"sp_margin_sm",
+	"SP_MARGIN_MD": &"sp_margin_md",
+	"SP_MARGIN_LG": &"sp_margin_lg",
 }
 
 # Non-token constants that legitimately live in AethelTokens but are not design
