@@ -30,7 +30,7 @@ metadata:
   intended-audience:
   - ai-agents
   - contributors
-  security-classification: l2_confidential
+  security-classification: l0_public
 ssot_path: gcl-ui-components/AGENTS.md
 ---
 # AGENTS.md — gcl-ui-components
