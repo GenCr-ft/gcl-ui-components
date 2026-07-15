@@ -36,7 +36,7 @@ metadata:
   - ai-agents
   - governance-team
   - project-leads
-  security-classification: l2_confidential
+  security-classification: l0_public
 knowledgeGuardian:
 - Antoine (GCT-MGT-PPM-001)
 - Béatrice (GCT-MGT-SPM-001)

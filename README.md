@@ -23,7 +23,7 @@ metadata:
   intended-audience:
   - contributors
   - ai-agents
-  security-classification: l2_confidential
+  security-classification: l0_public
 ---
 
 # gcl-ui-components
