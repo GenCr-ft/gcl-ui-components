@@ -53,5 +53,5 @@ env/
 addons/gut
 # GUT test output
 test-results/
-# Agent planning scratch (never commit)
-.planning/
+# Planning artifacts ARE tracked: the pre-commit traceability gate requires
+# .planning/<date>-<issue>-<slug>/task_plan.md for the branch's issue (GenCr-ft/gcs-plt-gemop#423).
