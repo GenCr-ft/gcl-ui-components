@@ -17,6 +17,13 @@ jobs:
     with:
       # We keep the default behavior which is to fail the job on error.
       continue-on-error: true
-      # We specify the exact, stable versions of our governance and tooling.
-      governance-version: "v1.4.0"
+      # v1.6.0 is the terminal Law target for the #320 fleet sweep. Cumulatively over v1.4.0:
+      #   - `requirement`/REQ + `initiative`/INIT   (gcs-core-governance#321, ratified 2026-08-10)
+      #   - `investors` intended_audience           (gcs-core-governance#320 Decision 3, 2026-08-21)
+      #   - 13 knowledge_classification_type definitions (#332/bec3d66, shipped without a bump)
+      # Purely additive over v1.4.0: no enum entry was removed, so nothing that passed before can
+      # fail now. Measured effect on THIS repo: 1 findings -> 1 (delta 0). The re-pin is drift
+      # alignment, not debt reduction - all 478 findings the sweep clears are in gcp-aethel-docs-req
+      # and gcp-aethel-architecture. A flat result here is expected, not a failed sweep.
+      governance-version: "v1.6.0"
       tooling-version: "v4.3.2"
