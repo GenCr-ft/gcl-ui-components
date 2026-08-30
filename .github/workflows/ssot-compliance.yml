@@ -11,7 +11,7 @@ jobs:
  validate-ssot:
     name: "Run Official SSoT Linter"
     # This calls the master workflow from the correct SSoT location.
-    uses: GenCr-ft/gcd-shared-actions/.github/workflows/reusable-ssot-linter.yml@v1.3.5
+    uses: GenCr-ft/gcd-shared-actions/.github/workflows/reusable-ssot-linter.yml@v1.3.8
     secrets:
       CROSS_REPO_PAT: ${{ secrets.CROSS_REPO_PAT }}
     with:
@@ -26,4 +26,4 @@ jobs:
       # alignment, not debt reduction - all 478 findings the sweep clears are in gcp-aethel-docs-req
       # and gcp-aethel-architecture. A flat result here is expected, not a failed sweep.
       governance-version: "v1.6.0"
-      tooling-version: "v4.3.2"
+      tooling-version: "v4.4.1"
