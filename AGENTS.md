@@ -135,19 +135,36 @@ rejected in ENG-ADR-089.
 
 Any gap, defect, or action item found while working in this repo **must become a GitHub Issue before proceeding** — nothing lives only in conversation context or memory.
 
+Write the payload to a file first. `gft` reads the title and body from it, and inlining prose in a shell command is an unallowlistable permission escalation (workspace `AGENTS.md` §4). Payload files belong in `.agent-scratch/`.
+
+```yaml
+# .agent-scratch/<slug>.yaml
+title: "[gcl-ui-components] Short description of the gap"
+body: |
+  ## Summary
+
+  ## Evidence
+
+  ## Ref
+  ENG-BACK-NNN (if known)
+```
+
 ```bash
 # Route: engineering/game bugs and improvements → gcp-aethel-backlog
-gh issue create --repo GenCr-ft/gcp-aethel-backlog \
-  --title "[gcl-ui-components] Short description of the gap" \
-  --body "## Summary
+gft issue create --repo GenCr-ft/gcp-aethel-backlog --input .agent-scratch/<slug>.yaml
+```
 
-## Evidence
+Then add it to Project #16 — never skip this step:
 
-## Ref
-ENG-BACK-NNN (if known)"
+```yaml
+# .agent-scratch/<slug>-board.yaml
+project: 16
+owner: GenCr-ft
+url: <issue-url>
+```
 
-# Immediately add to Project #16:
-gh project item-add 16 --owner GenCr-ft --url <issue-url>
+```bash
+gft project item-add --input .agent-scratch/<slug>-board.yaml
 ```
 
 Full routing table: workspace `AGENTS.md §9 — Gap Identification Protocol`.
