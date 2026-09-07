@@ -135,7 +135,7 @@ rejected in ENG-ADR-089.
 
 Any gap, defect, or action item found while working in this repo **must become a GitHub Issue before proceeding** — nothing lives only in conversation context or memory.
 
-Write the payload to a file first. `gft` reads the title and body from it, and inlining prose in a shell command is an unallowlistable permission escalation (workspace `AGENTS.md` §4). Payload files belong in `.agent-scratch/`.
+Mutating raw `gh` is **denied** by the `raw-gh-guardrail` `PreToolUse` hook, so use `gft`. Write the payload to a file first: `gft issue create` takes the title and body from the payload and has no `--title` or `--body` flag. Payload files go in the **workspace-root** `.agent-scratch/` — a repo-local one is not gitignored anywhere and would leave untracked files behind.
 
 ```yaml
 # .agent-scratch/<slug>.yaml
@@ -154,18 +154,16 @@ body: |
 gft issue create --repo GenCr-ft/gcp-aethel-backlog --input .agent-scratch/<slug>.yaml
 ```
 
-Then add it to Project #16 — never skip this step:
-
-```yaml
-# .agent-scratch/<slug>-board.yaml
-project: 16
-owner: GenCr-ft
-url: <issue-url>
-```
+Then add it to Project #16 — never skip this step. Step 1 returns the new issue's URL (add
+`--json` for a machine-readable envelope); pass that URL straight through, with no second payload
+file:
 
 ```bash
-gft project item-add --input .agent-scratch/<slug>-board.yaml
+gft project item-add 16 --owner GenCr-ft --url <issue-url>
 ```
+
+Never substitute the URL with `$(gft issue create …)`: a `$` outside a quoted heredoc is one of the
+only two constructs that cannot be allowlisted, so it would escalate the call.
 
 Full routing table: workspace `AGENTS.md §9 — Gap Identification Protocol`.
 
